@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="container">
+    <input type="text" id="wordInput" placeholder="Eg: Pirates">
+    <button id="showElementButton" class="font" onclick="searchWord()">Search</button>
+    <div class="hidden" id="show-details">
+      <div class="font" id="meaningDisplay">
+      </div>
+      <div class="font" id="errorDisplay"></div>
+      <div class="font" id="closeOption" style="display: none;">
+        <button class="font" id="closeButton" onclick="closeDetails()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script/app.js"></script>
+</body>
+</html>

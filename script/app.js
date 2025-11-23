@@ -10,6 +10,7 @@ async function searchWord() {
 
   if (!/^[a-zA-Z]+$/.test(wordInput)) {
     errorDisplay.textContent = 'Error !! Invalid input. Please enter only alphabets.';
+    errorDisplay.classList.remove('hidden');
     closeOption.style.display = 'block';
     return;
   }
@@ -39,23 +40,51 @@ closeButton.addEventListener('click', () => {
   showDetails.classList.add('hidden');
 })
 
+document.addEventListener('DOMContentLoaded', () => {
+  const wordInput = document.getElementById('wordInput');
+  if (wordInput) {
+    wordInput.focus();
+  }
+});
+
 function displayMeanings(data) {
   const meaningDisplay = document.getElementById('meaningDisplay');
+  meaningDisplay.classList.remove('hidden');
   const closeOption = document.getElementById('closeOption');
   const wordInput = document.getElementById('wordInput').value.trim();
+
   const wordSearched = document.createElement('div');
   wordSearched.classList.add('word-searched');
-  wordSearched.textContent = `${wordInput}`;
+  wordSearched.textContent = `Word Searched: ${wordInput}`;
+
   meaningDisplay.appendChild(wordSearched);
   for (const entry of data) {
     for (const meaning of entry.meanings) {
-      const partOfSpeech = meaning.partOfSpeech;
+      const partOfSpeech = meaning.partOfSpeech.toUpperCase();
+
+      const partOfSpeechSection = document.createElement('div');
+      partOfSpeechSection.classList.add('part-of-speech-section');
+
+      const meaningType = document.createElement('div');
+      meaningType.classList.add('meaning-type');
+      meaningType.textContent = `${partOfSpeech}:`;
+
+      partOfSpeechSection.appendChild(meaningType);
+
+      const definitionsContainer = document.createElement('ul');
+      definitionsContainer.classList.add('definitions-container');
+
       for (const definitionObj of meaning.definitions) {
         const definition = definitionObj.definition;
-        const meaningElement = document.createElement('div');
-        meaningElement.textContent = `${partOfSpeech}: ${definition}`;
-        meaningDisplay.appendChild(meaningElement);
+        const meaningContainer = document.createElement('li');
+        meaningContainer.classList.add('meaning-container');
+        meaningContainer.textContent = definition;
+
+        definitionsContainer.appendChild(meaningContainer);
       }
+
+      partOfSpeechSection.appendChild(definitionsContainer);
+      meaningDisplay.appendChild(partOfSpeechSection);
     }
   }
   closeOption.style.display = 'block';
